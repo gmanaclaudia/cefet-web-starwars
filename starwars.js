@@ -5,7 +5,7 @@
 //  - A introdução de cada filme, quando ele for clicado
 
 
-
+//lista de filmes
 $.ajax({
   url: 'http://swapi.co/api/films/',
   method: 'GET',      // opcional: 'GET' é o valor padrão
@@ -16,24 +16,20 @@ $.ajax({
       let movie = resposta.results[i];
       $listaDeFilmes.append('<li><a href="' + movie.url + '">'+'Episode '+ movie.episode_id +'</a></li>');
     }
-  }
-});
 
-$.ajax({
-  url: 'http://swapi.co/api/films/',
-  method: 'GET',      // opcional: 'GET' é o valor padrão
-  success: function(abertura) {
-    console.log(abertura);
-    let $todososFilmes = $('#movies li');
-    for (let j = 0; j< abertura.results.length; i++){
-      let movie = resposta.results[i];
-      $listaDeFilmes.append('<li><a href="' + movie.url + '">'+'Episode '+ movie.episode_id +'</a></li>');
+    //
+    let todososFilmes = document.querySelectorAll('#movies>ul>li');
+    console.log(todososFilmes);
+    for (let j=0; j< todososFilmes.length; j++){
+      let filmes = resposta.results[j+1];
+      window.localStorage.setItem('filmes', filmes);
+      filmes.click(function() {
+        console.log(filmes.opening_crawl);
+        $(".reading-animation").text(filmes.opening_crawl);
+      });
+
+
     }
   }
-});
 
-var menuExpandido = localStorage.get('menu-expandido'),
-    menu = document.getElementById('menu');
-if (menuExpandido === 'true') {
-  menu.classList.add('expandido');
-}
+});
